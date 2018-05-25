@@ -39,7 +39,7 @@ readarray secrets < $SECRET_FILE
 REMOTE_IP=${secrets[1]}
 REMOTE_HOST="uad@$REMOTE_IP"
 
-echo echo"REMOTE_IP: "$REMOTE_IP
+echo "REMOTE_IP: "$REMOTE_IP
 echo "REMOTE_HOST: "$REMOTE_HOST
 
 #check if remote machine with static addres is online (remote machine)
@@ -58,7 +58,7 @@ if [ $REMOTE_STATUS != "online" ]
 else
 #it is online, ssh into remote and run local script to read the old ip address
 OLD_THRWD_IP=$(ssh $REMOTE_HOST python3 -u - < read.py)
-echo $OLD_THRWD_IP
+echo "OLD_THRDN_IP: " $OLD_THRWD_IP
 fi
 
 if [ $CURRNT_IP == $OLD_THRWD_IP ]
