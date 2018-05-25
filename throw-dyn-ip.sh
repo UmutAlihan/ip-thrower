@@ -64,13 +64,12 @@ fi
 if [ $CURRNT_IP == $OLD_THRWD_IP ]
 	then
 	echo "THROWER: no need to thorw currnt_ip"
-	exit
 else
 	#throw new ip to remote
 	echo "THROWER: throwing new_ip"
 	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-dyn-ip'"
 	echo "THROWER: done"
-	exit
 fi
 
-
+echo "THROWER: Last check: $(date)"
+exit
