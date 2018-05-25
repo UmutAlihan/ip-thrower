@@ -72,4 +72,5 @@ else
 fi
 
 echo "THROWER: Last check: $(date)"
+printf "\n\n"
 exit
