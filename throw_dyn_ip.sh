@@ -23,7 +23,7 @@ SCRPT_PATH="`( cd \"$SCRPT_PATH\" && pwd )`"  # absolutized and normalized
 if [ -z "$SCRPT_PATH" ] ; then
   # error; for some reason, the path is not accessible
   # to the script (e.g. permissions re-evaled after suid)
-  echo $SCRPT_PATH
+  echo "SCRPT_PATH: "$SCRPT_PATH
   exit 1  # fail
 fi
 
@@ -39,16 +39,16 @@ readarray secrets < $SECRET_FILE
 REMOTE_IP=${secrets[1]}
 REMOTE_HOST="uad@$REMOTE_IP"
 
-echo $REMOTE_IP
-echo $REMOTE_HOST
+echo echo"REMOTE_IP: "$REMOTE_IP
+echo "REMOTE_HOST: "$REMOTE_HOST
 
 #check if remote machine with static addres is online (remote machine)
 REMOTE_STATUS=$(python3 check.py $REMOTE_IP) 
-echo $REMOTE_STATUS
+echo "REMOTE_STATUS: "$REMOTE_STATUS
 
 #get current ip of macihne with dynamic addres (this machine)
 CURRNT_IP=$(curl -s ipinfo.io/ip)
-echo $CURRNT_IP
+echo "CURRNT_IP: " $CURRNT_IP
 
 #send a telegram alert if remote is offline
 if [ $REMOTE_STATUS != "online" ]
