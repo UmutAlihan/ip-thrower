@@ -18,18 +18,21 @@
 
 
 #find path of running script
-MY_PATH="`dirname \"$0\"`"              # relative
-MY_PATH="`( cd \"$MY_PATH\" && pwd )`"  # absolutized and normalized
-if [ -z "$MY_PATH" ] ; then
+SCRPT_PATH="`dirname \"$0\"`"              # relative
+SCRPT_PATH="`( cd \"$SCRPT_PATH\" && pwd )`"  # absolutized and normalized
+if [ -z "$SCRPT_PATH" ] ; then
   # error; for some reason, the path is not accessible
   # to the script (e.g. permissions re-evaled after suid)
+  echo $SCRPT_PATH
   exit 1  # fail
 fi
-echo "$MY_PATH"
+
+
+SECRET_FILE="$SCRPT_PATH/ip.secret"
 
 #read confidential Data from file
 declare -a secrets
-readarray secrets < "$MY_PATH/ip.secret"
+readarray secrets < $SECRET_FILE
 
 
 #vars for ssh into remote
