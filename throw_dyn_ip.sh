@@ -10,6 +10,7 @@
 #(execute remote shell commands and scripts -> https://zaiste.net/a_few_ways_to_execute_commands_remotely_using_ssh/ )
 #(execute remote pyhton script -> https://unix.stackexchange.com/questions/299657/run-local-python-script-on-remote-machine?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
 #(read lines of textfile into bash array -> https://peniwize.wordpress.com/2011/04/09/how-to-read-all-lines-of-a-file-into-a-bash-array/)
+#(save github credentials -> git config --global credential.helper cache (or store, --file /path/to/file))
 
 #TODO:
 #1) key ekle -> şifresiz ssh
