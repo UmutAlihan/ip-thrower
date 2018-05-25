@@ -57,7 +57,7 @@ if [ $REMOTE_STATUS != "online" ]
 	exit
 else
 #it is online, ssh into remote and run local script to read the old ip address
-OLD_THRWD_IP=$(ssh $REMOTE_HOST python3 -u - < read.py)
+OLD_THRWD_IP=$(ssh $REMOTE_HOST python3 -u - < $SCRPT_PATH/read.py)
 echo "OLD_THRDN_IP: " $OLD_THRWD_IP
 fi
 
