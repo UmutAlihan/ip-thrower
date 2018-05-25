@@ -26,12 +26,16 @@ readarray secrets < ./ip.secret
 REMOTE_IP=${secrets[1]}
 REMOTE_HOST="uad@$REMOTE_IP"
 
+echo $REMOTE_IP
+echo $REMOTE_HOST
+
 #check if remote machine with static addres is online (remote machine)
 REMOTE_STATUS=$(python3 check.py $REMOTE_IP) 
+echo $REMOTE_STATUS
 
 #get current ip of macihne with dynamic addres (this machine)
 CURRNT_IP=$(curl -s ipinfo.io/ip)
-
+echo $CURRNT_IP
 
 #send a telegram alert if remote is offline
 if [ $REMOTE_STATUS != "online" ]
@@ -41,6 +45,7 @@ if [ $REMOTE_STATUS != "online" ]
 else
 #it is online, ssh into remote and run local script to read the old ip address
 OLD_THRWD_IP=$(ssh $REMOTE_HOST python3 -u - < read.py)
+echo $OLD_THRWD_IP
 fi
 
 if [ $CURRNT_IP == $OLD_THRWD_IP ]
