@@ -13,9 +13,7 @@
 #(save github credentials -> git config --global credential.helper cache (or store, --file /path/to/file))
 
 #TODO:
-#1) key ekle -> şifresiz ssh
-#3) remoteda dosya silinirse nolucak?
-#4) scale to n number of machines with dynamic addresses
+#1) scale to n number of machines with dynamic addresses
 
 
 #find path of running script
