@@ -28,11 +28,12 @@ if [ -z "$SCRPT_PATH" ] ; then
 fi
 
 
-SECRET_FILE="$SCRPT_PATH/ip.secret"
 
 #read confidential Data from file
+SECRET_FILE="$SCRPT_PATH/ip.secret"
 declare -a secrets
 readarray secrets < $SECRET_FILE
+
 
 
 #vars for ssh into remote
@@ -42,13 +43,19 @@ REMOTE_HOST="uad@$REMOTE_IP"
 echo "REMOTE_IP: "$REMOTE_IP
 echo "REMOTE_HOST: "$REMOTE_HOST
 
+
+
 #check if remote machine with static addres is online (remote machine)
-REMOTE_STATUS=$(python3 check.py $REMOTE_IP) 
+REMOTE_STATUS=$(python3 $SCRPT_PATH/check.py $REMOTE_IP) 
 echo "REMOTE_STATUS: "$REMOTE_STATUS
+
+
 
 #get current ip of macihne with dynamic addres (this machine)
 CURRNT_IP=$(curl -s ipinfo.io/ip)
 echo "CURRNT_IP: " $CURRNT_IP
+
+
 
 #send a telegram alert if remote is offline
 if [ $REMOTE_STATUS != "online" ]
