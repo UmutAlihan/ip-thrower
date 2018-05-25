@@ -19,7 +19,7 @@
 
 #read confidential Data from file
 declare -a secrets
-readarray secrets < ./secret
+readarray secrets < ./ip.secret
 
 
 #vars for ssh into remote

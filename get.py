@@ -13,5 +13,4 @@ def ip_address():
 
 
 if __name__ == "__main__":
-	ip = my_ip()
-	print(ip)
+	print(ip_address())
