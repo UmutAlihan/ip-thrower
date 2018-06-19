@@ -1,7 +1,16 @@
 #!/usr/bin/python3
+import os
+import socket
+import sys
+
+
 
 #path/to/file at remote
-throwed_ip = "/home/uad/throwed-dyn-ip"		#scriptin çalıştığı dir olarak dynami ayarlansın
+path_scrpt = os.path.abspath(os.path.dirname(sys.argv[0]))
+user = os.uname().nodename
+
+throwed_ip = "{}/throwed-ips/{}".format(path_scrpt, user)		
+
 
 def read():
 	throwed_file = open(throwed_ip, "r")

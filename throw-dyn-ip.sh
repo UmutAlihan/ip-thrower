@@ -14,9 +14,10 @@
 
 #TODO:
 #1) scale to n number of machines with dynamic addresses
+#2) readarray alternativ
 
-
-#find path of running script
+##find path of running script
+####################################
 SCRPT_PATH="`dirname \"$0\"`"              # relative
 SCRPT_PATH="`( cd \"$SCRPT_PATH\" && pwd )`"  # absolutized and normalized
 if [ -z "$SCRPT_PATH" ] ; then
@@ -25,52 +26,61 @@ if [ -z "$SCRPT_PATH" ] ; then
   echo "Failed SCRPT_PATH: "$SCRPT_PATH
   exit 1  # fail
 fi
+####################################
 
 
-
-#read confidential Data from file
-SECRET_FILE="$SCRPT_PATH/ip.secret"
-declare -a secrets
-readarray secrets < $SECRET_FILE
-
-
-
+#read confidential Data from file then assign to var
+####################################
+SECRET_FILE="$SCRPT_PATH/ip.sec"
+#declare -a secrets
+#readarray secrets < $SECRET_FILE
 #vars for ssh into remote
-REMOTE_IP=${secrets[1]}
+#REMOTE_IP=${secrets[1]}
+REMOTE_IP=$(cat $SECRET_FILE | tail -1)
 REMOTE_HOST="uad@$REMOTE_IP"
+####################################
 
 
 #check if remote machine with static addres is online (remote machine)
+####################################
 REMOTE_STATUS=$(python3 $SCRPT_PATH/check.py $REMOTE_IP) 
 echo "REMOTE_STATUS: "$REMOTE_STATUS
+####################################
 
 
 #get current ip of macihne with dynamic addres (this machine)
+####################################
 CURRNT_IP=$(curl -s ipinfo.io/ip)
 echo "CURRNT_IP: " $CURRNT_IP
+####################################
 
 
+#everything is ready, now some throw action
+####################################
 #send a telegram alert if remote is offline
-if [ $REMOTE_STATUS != "online" ]
+if [[ $REMOTE_STATUS != "online" ]]
 	then
 	telegram-send "Alert from dyn_ip_thrower: remote(ams) is unreachable!"
 	exit
 else
 #it is online, ssh into remote and run local script to read the old ip address
 OLD_THRWD_IP=$(ssh $REMOTE_HOST python3 -u - < $SCRPT_PATH/read.py)
-echo "OLD_THRDN_IP: " $OLD_THRWD_IP
+echo "OLD_THRWD_IP: " $OLD_THRWD_IP
 fi
 
-if [ $CURRNT_IP == $OLD_THRWD_IP ]
+if [[ $CURRNT_IP == $OLD_THRWD_IP ]]
 	then
 	echo "THROWER: no need to thorw currnt_ip"
 else
 	#throw new ip to remote
 	echo "THROWER: throwing new_ip"
-	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-dyn-ip'"
+	LOCAL_USER=$(id -un)
+	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-ips/$LOCAL_USER'"
 	echo "THROWER: done"
 fi
 
 echo "THROWER: Last check: $(date)"
-printf "\n\n"
+printf "\n"
 exit
+####################################
+
