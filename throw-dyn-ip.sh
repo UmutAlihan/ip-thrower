@@ -29,6 +29,9 @@ fi
 ####################################
 
 
+LOCAL_USER="uad"
+
+
 #read confidential Data from file then assign to var
 ####################################
 SECRET_FILE="$SCRPT_PATH/ip.sec"
@@ -61,6 +64,7 @@ echo "CURRNT_IP: " $CURRNT_IP
 if [[ $REMOTE_STATUS != "online" ]]
 	then
 	telegram-send "Alert from dyn_ip_thrower: remote(ams) is unreachable!"
+	echo "Alert from dyn_ip_thrower: remote(ams) is unreachable!"
 	exit
 else
 #it is online, ssh into remote and run local script to read the old ip address
@@ -74,7 +78,8 @@ if [[ $CURRNT_IP == $OLD_THRWD_IP ]]
 else
 	#throw new ip to remote
 	echo "THROWER: throwing new_ip"
-	LOCAL_USER=$(id -un)
+	#dynamic: LOCAL_USER=$(id -un)  [need to implement after cron problem solved]
+	#currently static above
 	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-ips/$LOCAL_USER'"
 	echo "THROWER: done"
 fi
