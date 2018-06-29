@@ -29,14 +29,15 @@ fi
 
 
 #read confidential Data from file
-SECRET_FILE="$SCRPT_PATH/ip.secret"
-declare -a secrets
-readarray secrets < $SECRET_FILE
+#SECRET_FILE="$SCRPT_PATH/ipsecret.py"
+#declare -a secrets
+#readarray secrets < $SECRET_FILE
 
+secrets=($(awk -F= '{print $1}' ipsecret.py))
 
 
 #vars for ssh into remote
-REMOTE_IP=${secrets[1]}
+REMOTE_IP=${secrets}
 REMOTE_HOST="uad@$REMOTE_IP"
 
 
@@ -51,9 +52,9 @@ echo "CURRNT_IP: " $CURRNT_IP
 
 
 #send a telegram alert if remote is offline
-if [ $REMOTE_STATUS != "online" ]
+if [[$REMOTE_STATUS != "online"]]
 	then
-	telegram-send "Alert from dyn_ip_thrower: remote(ams) is unreachable!"
+	#telegram-send "Alert from dyn_ip_thrower: remote(ams) is unreachable!"
 	exit
 else
 #it is online, ssh into remote and run local script to read the old ip address
@@ -67,7 +68,7 @@ if [ $CURRNT_IP == $OLD_THRWD_IP ]
 else
 	#throw new ip to remote
 	echo "THROWER: throwing new_ip"
-	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-dyn-ip'"
+	ssh $REMOTE_HOST bash -c "'echo $CURRNT_IP > /home/uad/throwed-ips/zeyno'"
 	echo "THROWER: done"
 fi
 

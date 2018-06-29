@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 #path/to/file at remote
-throwed_ip = "/home/uad/throwed-dyn-ip"		#scriptin çalıştığı dir olarak dynami ayarlansın
+throwed_ip = "/home/uad/throwed-ip/zeyno"		#scriptin çalıştığı dir olarak dynami ayarlansın
 
 def read():
 	throwed_file = open(throwed_ip, "r")

@@ -1,0 +1,1 @@
+env EDITOR=nano crontab -l

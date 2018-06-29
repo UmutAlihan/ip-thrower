@@ -13,9 +13,9 @@ def if_online(ip):
 	return not(any("100% packet loss" in result for result in ping_result))
 
 
-if __name__=="__main__":
-	ip = sys.argv[1]
-	if(if_online(ip)):
-		print("online".format(ip))
-	else:
-		print("offline".format(ip))
+#if __name__=="__main__":
+#	ip = sys.argv[1]
+#	if(if_online(ip)):
+#		print("online".format(ip))
+#	else:
+#		print("offline".format(ip))
