@@ -39,6 +39,7 @@ SECRET_FILE="$SCRPT_PATH/ip.sec"
 #readarray secrets < $SECRET_FILE
 #vars for ssh into remote
 #REMOTE_IP=${secrets[1]}
+#or AFSARL_PORT=$(awk 'NR==3' $SECRET_FILE) ## you can read a specific line of a file
 REMOTE_IP=$(cat $SECRET_FILE | tail -1)
 REMOTE_HOST="uad@$REMOTE_IP"
 ####################################
